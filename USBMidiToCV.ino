@@ -175,7 +175,7 @@ void loop()
 
     mod_voltage = abs(vertical_val - 512 )/512.0 * 5.0;
     dac.setVoltage( mod_voltage, CHANNEL_B );
-    Serial.print("Pitch voltage = ");
+    Serial.print("Mod voltage = ");
     Serial.println(mod_voltage, DEC );
     last_vertical_val = vertical_val;
   }
@@ -254,6 +254,9 @@ void note_on( byte note)
 void note_off( byte note ) {
 
   notes_on -= 1;
+  if( notes_on < 0 ) {
+    notes_on = 0;
+  }
   if( notes_on == 0 ) {
     digitalWrite( GATE_PIN, LOW ); 
     digitalWrite( NOTE_ON_LED_PIN, LOW );
